@@ -1,10 +1,14 @@
 /**
  * TODO(you): Add the CSS necessary to complete your final project.
  **/
- @import url(https://fonts.googleapis.com/css?family=Merriweather&display=swap);
- 
- @import url(https://fonts.googleapis.com/css?family=Montserrat&display=swap);
- 
+ @font-face{
+  font-family: Merriweather;
+  src: url(https://fonts.google.com/specimen/Merriweather);
+ }
+ @font-face{
+  font-family: Montserrat;
+  src: url(https://fonts.google.com/specimen/Montserrat);
+ }
  body {
   background-color: #fdf5f5;
 }
@@ -15,7 +19,6 @@
   align-items: center;
   font-family: Montserrat;
   font-size: 12px;
-  height: 80vh;
 }
 #tt{
   font-family: Merriweather;
@@ -34,7 +37,4 @@
 #tb:hover{
   background-color: black;
   color: white;
-}
-.inactive {
-  display: none !important;
 }
