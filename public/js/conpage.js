@@ -3,12 +3,12 @@ class Conpage {
       this.hide=this.hide.bind(this);
       this.containerElement = containerElement;
       this.goedit=this.goedit.bind(this);
-      this.spa=document.querySelector('#ds');
+      this.spa=document.getElementById('#ds');
       console.log('hey');
-      console.log(spa);
-      this.ta=document.querySelector('textarea');
+      console.log(this.spa);
+      this.ta=document.getElementById('#ta');
       console.log('there');
-      console.log(ta);
+      console.log(this.ta);
       this.spa.addEventListener('click',this.goedit);
     }
     goedit(){
