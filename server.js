@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const googleSheets = require('gsa-sheets');
+const exphbs  = require('express-handlebars');
 
 // TODO(you): Update the contents of privateSettings accordingly, as you did
 // in HW5, then uncomment this line.
@@ -13,13 +14,20 @@ const sheet = googleSheets(key.client_email, key.private_key, SPREADSHEET_ID);
 
 const app = express();
 const jsonParser = bodyParser.json();
-
+const hbs = exphbs.create();
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 
 // TODO(you): Add at least 1 GET route and 1 POST route.
-app.get('public/id/123', function (req, res) {
+function onGetMain(req, res) {
+  res.render('index');
+}
+app.get('/', onGetMain);
+
+  app.get('/id/123', function (req, res) {
   console.log('inin');
-  res.send('public/id/123.html');
+  res.render('content');
 })
 
 async function onGet(req, res) {

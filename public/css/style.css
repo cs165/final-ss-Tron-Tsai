@@ -7,6 +7,7 @@
  
  body {
   background-color: #fdf5f5;
+  height: 80vh;
 }
 .mp{
   display: flex;
@@ -37,4 +38,47 @@
 }
 .inactive {
   display: none !important;
+}
+.ct{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Merriweather;
+}
+#fst{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: white;
+  width: 100vh;
+}
+#dt{
+  font-size: 30px;
+  border-bottom-style: solid;
+  border-color: black;
+  border-width:2px;
+  padding-bottom: 15px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+#spa{
+  width:60vh;
+  height: 40vh;
+  background-color: blue;
+}
+textarea{
+  width:60vh;
+  height: 40vh;
+}
+#ds{
+  font-family: Merriweather;
+}
+#home{
+}
+#pre{
+
+}
+#next{
+
 }

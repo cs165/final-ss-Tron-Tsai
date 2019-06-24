@@ -3,6 +3,8 @@ class App {
     this.gohomepage = this.gohomepage.bind(this);
     const homepage = document.querySelector('.mp');
     this.HomePage= new Homepage(homepage);
+    const conpage = document.querySelector('.ct');
+    this.ConPage= new Conpage(conpage);
     addEventListener('gohome',this.gohomepage);
   }
   gohomepage(){
