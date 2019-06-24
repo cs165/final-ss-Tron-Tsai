@@ -33,19 +33,21 @@ app.get('/', onGetMain);
 async function onGet(req, res) {
   const result = await sheet.getRows();
   const rows = result.rows;
+  console.log('finally');
   console.log(rows);
-
-  // TODO(you): Finish onGet.
-  var all = [];
-  var part = {};
-    for (var i=1; i < rows.length; i++) {
-        part = {[rows[0][0].toString()]: rows[i][0].toString(), [rows[0][1].toString()]: rows[i][1].toString()};
-        all.push(part);
+  var all;
+  console.log('beforeall: '+all);
+    for (var i=0; i < rows.length; i++) {
+        if(rows[i][0]=='2019/6/24')
+        {
+          all=rows[i][1];
+        }
     }
-    res.json(all);
+    console.log(all);
+    res.json(rows);
 
 }
-app.get('/api', onGet);
+app.get('/dat', onGet);
 // Please don't change this; this is needed to deploy on Heroku.
 const port = process.env.PORT || 3000;
 

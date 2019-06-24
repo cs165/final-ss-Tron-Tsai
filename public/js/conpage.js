@@ -5,6 +5,7 @@ class Conpage {
       this.goedit=this.goedit.bind(this);
       this.editback=this.editback.bind(this);
       this.getRandomInt = this.getRandomInt.bind(this);
+      this.gohome=this.gohome.bind(this);
       this.spa=document.getElementById('spa');
       this.ta=document.getElementById('ta');
       this.fst=document.getElementById('fst');
@@ -12,6 +13,9 @@ class Conpage {
       this.hb=document.getElementById('hb');
       this.dt=document.getElementById('dt');
       this.ds=document.getElementById('ds');
+      this.pre=document.getElementById('pre');
+      this.next=document.getElementById('next');
+      this.home=document.getElementById('home');
       this.randomtheme = ['List the things that make you feel powerful.',
       'What is something that made you laugh today?',
       'List the movies that you want to watch.',
@@ -45,11 +49,29 @@ class Conpage {
       'List three traits you would like others to see in you.'];
       this.spa.addEventListener('click',this.goedit);
       this.hb.addEventListener('click',this.editback);
+      this.home.addEventListener('click',this.gohome);
+      this.pre.addEventListener('click',this.gopre);
+      this.next.addEventListener('click',this.gonext);
       this.today = new Date();
+      this.day=this.today;
       this.options = { month: 'long', day: 'numeric' };
       console.log(this.today.toLocaleDateString('en-US', this.options));
       this.dt.innerHTML=this.today.toLocaleDateString('en-US', this.options);
       this.ds.innerHTML=this.randomtheme[this.getRandomInt(this.randomtheme.length)];
+      this.response = fetch('/dat')
+      .then((response) => response.json())
+      .then((firstjson) => {
+          this.todaycon=firstjson;
+          for(var i=0; i < this.todaycon.length; i++){
+            if(this.todaycon[i][0]==this.today.toLocaleDateString())
+            {
+              const todayconn=this.todaycon[i][1];
+              
+              this.spa.innerHTML=todayconn;
+              this.ta.value=todayconn;
+            }
+        }
+      });
       
 
     }
@@ -72,6 +94,27 @@ class Conpage {
         var change=this.ta.value;
         console.log(change);
         this.spa.innerHTML=change;
+    }
+    gohome(){
+        location.reload(true);
+    }
+    gopre(){
+        this.day.setDate(this.day.getDate() - 1);
+        console.log('thisday:'+this.day);
+        this.response = fetch('/dat')
+      .then((response) => response.json())
+      .then((firstjson) => {
+          this.todaycon=firstjson;
+          for(var i=0; i < this.todaycon.length; i++){
+            if(this.todaycon[i][0]==this.today.toLocaleDateString())
+            {
+              const todayconn=this.todaycon[i][1];
+              
+              this.spa.innerHTML=todayconn;
+              this.ta.value=todayconn;
+            }
+        }
+      });
     }
     hide(){
       this.containerElement.classList.add('inactive');
