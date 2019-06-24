@@ -34,20 +34,27 @@ async function onGet(req, res) {
   const result = await sheet.getRows();
   const rows = result.rows;
   console.log('finally');
-  console.log(rows);
-  var all;
-  console.log('beforeall: '+all);
-    for (var i=0; i < rows.length; i++) {
-        if(rows[i][0]=='2019/6/24')
-        {
-          all=rows[i][1];
-        }
-    }
-    console.log(all);
     res.json(rows);
 
 }
 app.get('/dat', onGet);
+
+async function onPost(req, res) {
+  const result = await sheet.getRows();
+  const rows = result.rows;
+  const messageBody = req.body;
+  var sendv=[messageBody.snedcont];
+  console.log(messageBody);
+  for(var i=0; i < rows.length; i++){
+    if(rows[i][0]==messageBody.senddate)
+    {
+      sheet.setRow(i,[messageBody.senddate,messageBody.sendcont]);
+      console.log('lets go');
+      }
+}
+  res.json({response: "success"});
+}
+app.post('/send', jsonParser, onPost);
 // Please don't change this; this is needed to deploy on Heroku.
 const port = process.env.PORT || 3000;
 

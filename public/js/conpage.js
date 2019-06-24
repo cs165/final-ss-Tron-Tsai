@@ -5,6 +5,8 @@ class Conpage {
       this.goedit=this.goedit.bind(this);
       this.editback=this.editback.bind(this);
       this.getRandomInt = this.getRandomInt.bind(this);
+      this.gopre = this.gopre.bind(this);
+      this.gonext = this.gonext.bind(this);
       this.gohome=this.gohome.bind(this);
       this.spa=document.getElementById('spa');
       this.ta=document.getElementById('ta');
@@ -48,10 +50,10 @@ class Conpage {
       'Talk about something you are excited about next month.',
       'List three traits you would like others to see in you.'];
       this.spa.addEventListener('click',this.goedit);
-      this.hb.addEventListener('click',this.editback);
       this.home.addEventListener('click',this.gohome);
       this.pre.addEventListener('click',this.gopre);
       this.next.addEventListener('click',this.gonext);
+      this.hb.addEventListener('click',this.editback);
       this.today = new Date();
       this.day=this.today;
       this.options = { month: 'long', day: 'numeric' };
@@ -65,10 +67,13 @@ class Conpage {
           for(var i=0; i < this.todaycon.length; i++){
             if(this.todaycon[i][0]==this.today.toLocaleDateString())
             {
+              console.log(this.todaycon[i][1]);
               const todayconn=this.todaycon[i][1];
-              
               this.spa.innerHTML=todayconn;
               this.ta.value=todayconn;
+              if(typeof todayconn==='undefined'){
+                this.spa.innerHTML='';
+                this.ta.value='';}
             }
         }
       });
@@ -85,6 +90,7 @@ class Conpage {
         this.ta.classList.remove('inactive');
         this.sec.classList.remove('inactive');
         console.log('area value:'+this.ta.value);
+        
     }
     editback(){
         this.spa.classList.remove('inactive');
@@ -94,6 +100,24 @@ class Conpage {
         var change=this.ta.value;
         console.log(change);
         this.spa.innerHTML=change;
+        const send={
+            senddate:this.day.toLocaleDateString(),
+            sendcont:change };
+        fetch("/send",{
+            method:'POST',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+           body: JSON.stringify(send)
+        })
+            .then((response)=>response.json())
+            .then((responseJsonData)=>{
+                console.log(responseJsonData);
+            })
+            .catch((error)=>{
+                alert(error);
+            });
     }
     gohome(){
         location.reload(true);
@@ -101,17 +125,47 @@ class Conpage {
     gopre(){
         this.day.setDate(this.day.getDate() - 1);
         console.log('thisday:'+this.day);
+        this.dt.innerHTML=this.day.toLocaleDateString('en-US', this.options);;
+        this.ds.innerHTML=this.randomtheme[this.getRandomInt(this.randomtheme.length)];
         this.response = fetch('/dat')
       .then((response) => response.json())
       .then((firstjson) => {
           this.todaycon=firstjson;
           for(var i=0; i < this.todaycon.length; i++){
-            if(this.todaycon[i][0]==this.today.toLocaleDateString())
+            if(this.todaycon[i][0]==this.day.toLocaleDateString())
             {
               const todayconn=this.todaycon[i][1];
               
               this.spa.innerHTML=todayconn;
               this.ta.value=todayconn;
+              console.log(typeof todayconn);
+              if(typeof todayconn==='undefined'){
+                this.spa.innerHTML='';
+                this.ta.value='';}
+              }
+        }
+      });
+    }
+    gonext(){
+        this.day.setDate(this.day.getDate() + 1);
+        console.log('thisday:'+this.day);
+        this.dt.innerHTML=this.day.toLocaleDateString('en-US', this.options);;
+        this.ds.innerHTML=this.randomtheme[this.getRandomInt(this.randomtheme.length)];
+        this.response = fetch('/dat')
+      .then((response) => response.json())
+      .then((firstjson) => {
+          this.todaycon=firstjson;
+          for(var i=0; i < this.todaycon.length; i++){
+            if(this.todaycon[i][0]==this.day.toLocaleDateString())
+            {
+              const todayconn=this.todaycon[i][1];
+              this.spa.innerHTML=todayconn;
+              this.ta.value=todayconn;
+              console.log(typeof todayconn);
+              if(typeof todayconn==='undefined'){
+                this.spa.innerHTML='';
+                this.ta.value='';
+              }
             }
         }
       });
