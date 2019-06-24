@@ -3,15 +3,17 @@ class Conpage {
       this.hide=this.hide.bind(this);
       this.containerElement = containerElement;
       this.goedit=this.goedit.bind(this);
-      this.spa=document.getElementById('#ds');
+      this.spa=document.getElementById('ds');
       console.log('hey');
       console.log(this.spa);
-      this.ta=document.getElementById('#ta');
+      this.ta=document.getElementById('ta');
       console.log('there');
       console.log(this.ta);
       this.spa.addEventListener('click',this.goedit);
+
     }
     goedit(){
+        console.log('ingoedit');
         this.spa.classList.add('inactive');
         this.ta.classList.remove('inactive');
     }
